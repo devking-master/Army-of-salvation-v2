@@ -15,7 +15,7 @@ export default function MembersPage() {
   useEffect(() => {
     async function fetchMembers() {
       try {
-        const response = await fetch("/api/members");
+        const response = await fetch("/api/members", { cache: "no-store" });
         const data = await response.json();
         if (data.success && Array.isArray(data.members)) {
           setMembers(data.members);
