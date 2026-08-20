@@ -1,0 +1,3 @@
+import type { Metadata } from "next";import SectionHeader from "@/components/SectionHeader";import LeaderCard from "@/components/LeaderCard";import { leaders } from "@/data/site";
+export const metadata:Metadata={title:"Leadership",description:"High command leadership team."};
+export default function Leadership(){return <section className="section-pad min-h-screen bg-night pt-28 sm:pt-32"><div className="container-pad"><SectionHeader title="High Command" subtitle="Officers and leaders committed to discipline, excellence, and spiritual growth."/><div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{leaders.map(l=><LeaderCard key={l.name} leader={l}/>)}</div></div></section>}

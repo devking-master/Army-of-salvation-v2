@@ -1,0 +1,219 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: #030712;
+  color: #f4fbff;
+}
+
+body {
+  overflow-x: hidden;
+  background-image:
+    radial-gradient(circle at 12% 10%, rgba(56, 189, 248, 0.22), transparent 24rem),
+    radial-gradient(circle at 88% 20%, rgba(185, 28, 28, 0.16), transparent 22rem),
+    linear-gradient(180deg, #061525 0%, #07111f 45%, #030712 100%);
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+
+a {
+  word-break: break-word;
+}
+
+::selection {
+  background: rgba(125, 211, 252, 0.35);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #030712;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #164e63;
+  border-radius: 99px;
+}
+
+@layer components {
+  .container-pad {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-pad {
+    @apply relative py-16 sm:py-20 md:py-24 lg:py-28;
+  }
+
+  .orb {
+    @apply pointer-events-none absolute rounded-full blur-3xl;
+  }
+
+  .glass-shell {
+    @apply border border-white/10 shadow-2xl backdrop-blur-2xl;
+    background: rgba(255, 255, 255, 0.055);
+  }
+
+  .command-card {
+    @apply relative overflow-hidden rounded-2xl border p-5 shadow-2xl backdrop-blur-xl transition duration-500 sm:p-6;
+    border-color: rgba(103, 232, 249, 0.2);
+    background: rgba(255, 255, 255, 0.045);
+  }
+
+  .command-card:hover {
+    transform: translateY(-0.35rem);
+    border-color: rgba(103, 232, 249, 0.5);
+    background: rgba(255, 255, 255, 0.075);
+  }
+
+  .command-card::before {
+    content: "";
+    @apply absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-300 to-transparent opacity-70;
+  }
+
+  .command-card::after {
+    content: "";
+    @apply pointer-events-none absolute -right-16 -top-16 h-32 w-32 rounded-full blur-2xl transition duration-500;
+    background: rgba(34, 211, 238, 0.1);
+  }
+
+  .command-card:hover::after {
+    background: rgba(239, 68, 68, 0.2);
+  }
+
+  .command-btn {
+    @apply inline-flex w-full items-center justify-center gap-2 rounded-xl border border-cyan-200/40 bg-gradient-to-r from-cyan-200 via-sky-300 to-white px-5 py-3 text-center text-[11px] font-black uppercase tracking-[.16em] text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:-translate-y-1 hover:shadow-cyan-300/40 sm:w-auto sm:px-6 sm:text-xs;
+  }
+
+  .ghost-btn {
+    @apply inline-flex w-full items-center justify-center gap-2 rounded-xl border border-white/20 px-5 py-3 text-center text-[11px] font-black uppercase tracking-[.16em] text-white backdrop-blur-xl transition hover:-translate-y-1 hover:border-cyan-300/50 sm:w-auto sm:px-6 sm:text-xs;
+    background: rgba(255, 255, 255, 0.055);
+  }
+
+  .ghost-btn:hover {
+    background: rgba(103, 232, 249, 0.1);
+  }
+
+  .danger-btn {
+    @apply inline-flex w-full items-center justify-center gap-2 rounded-xl border border-red-400/40 px-5 py-3 text-center text-[11px] font-black uppercase tracking-[.16em] text-red-100 transition hover:-translate-y-1 sm:w-auto sm:px-6 sm:text-xs;
+    background: rgba(239, 68, 68, 0.2);
+  }
+
+  .danger-btn:hover {
+    background: rgba(239, 68, 68, 0.25);
+  }
+
+  .kicker {
+    @apply inline-flex max-w-full items-center gap-2 rounded-full border border-cyan-300/25 bg-cyan-300/10 px-3 py-2 text-[9px] font-black uppercase tracking-[.18em] text-cyan-100 shadow-lg shadow-cyan-500/10 backdrop-blur-xl sm:px-4 sm:text-[10px] sm:tracking-[.24em];
+  }
+
+  .heading {
+    @apply text-4xl font-black uppercase tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl;
+    text-shadow: 0 0 34px rgba(14, 165, 233, 0.18);
+  }
+
+  .heading-md {
+    @apply text-2xl font-black uppercase tracking-tight text-white md:text-3xl;
+  }
+
+  .text-sky-glow {
+    @apply bg-gradient-to-r from-cyan-200 via-sky-400 to-blue-500 bg-clip-text text-transparent;
+  }
+
+  .text-red-glow {
+    @apply bg-gradient-to-r from-white via-red-200 to-red-500 bg-clip-text text-transparent;
+  }
+
+  .subheading {
+    @apply mx-auto max-w-2xl text-center text-sm leading-7 text-slate-300 md:text-base;
+  }
+
+  .input-field {
+    @apply w-full rounded-xl border bg-slate-950/70 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-300/70 focus:ring-4 focus:ring-cyan-300/10;
+    border-color: rgba(103, 232, 249, 0.2);
+  }
+
+  .label {
+    @apply mb-2 block text-[11px] font-black uppercase tracking-[.18em] text-cyan-200;
+  }
+
+  .surface-grid {
+    background-image:
+      linear-gradient(rgba(125, 211, 252, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(125, 211, 252, 0.045) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+}
+
+.hero-bg {
+  background-image:
+    linear-gradient(90deg, rgba(3, 7, 18, 0.96), rgba(3, 7, 18, 0.72), rgba(3, 7, 18, 0.94)),
+    url("/images/gallery/brigade-formation.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.scan-lines::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 100% 4px;
+  opacity: 0.45;
+}
+
+.noise::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' seed='8'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+.floaty {
+  animation: floaty 5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

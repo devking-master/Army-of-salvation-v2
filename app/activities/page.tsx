@@ -1,0 +1,3 @@
+import type { Metadata } from "next";import SectionHeader from "@/components/SectionHeader";import ActivityCard from "@/components/ActivityCard";import { activities } from "@/data/site";
+export const metadata:Metadata={title:"Activities",description:"Training operations and activities."};
+export default function Activities(){return <section className="section-pad min-h-screen bg-night bg-grid bg-[size:42px_42px] pt-28 sm:pt-32"><div className="container-pad"><SectionHeader title="Strategic Operations" subtitle="Programs designed to build discipline, spiritual strength, and practical leadership."/><div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{activities.map(a=><ActivityCard key={a.title} item={a}/>)}</div></div></section>}
