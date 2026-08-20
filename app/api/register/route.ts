@@ -17,10 +17,26 @@ export async function POST(req: NextRequest) {
     }
 
     const serviceNumber = generateServiceNumber();
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+
+    // Dynamically auto-detect live production URL from request headers or environment variables
+    const host = req.headers.get("x-forwarded-host") || req.headers.get("host");
+    const protocol = req.headers.get("x-forwarded-proto") || (host && !host.includes("localhost") ? "https" : "http");
+
+    let appUrl = process.env.NEXT_PUBLIC_APP_URL?.trim();
+
+    if (!appUrl || appUrl.includes("localhost")) {
+      if (host && !host.includes("localhost")) {
+        appUrl = `${protocol}://${host}`;
+      } else if (process.env.VERCEL_URL) {
+        appUrl = `https://${process.env.VERCEL_URL}`;
+      } else {
+        appUrl = appUrl || "http://localhost:3000";
+      }
+    }
+
     const profileUrl = `${appUrl}/members/${serviceNumber}`;
 
-    // Generate QR Code Data URL
+    // Generate QR Code Data URL with the live profile URL
     const qrCodeDataUrl = await generateQRCodeDataUrl(profileUrl);
 
     // Default photo URL to user provided photo (base64) if present
@@ -52,7 +68,7 @@ export async function POST(req: NextRequest) {
       const conn = await connectToDatabase();
       if (conn) {
         dbConnected = true;
-        
+
         // Ensure service number is unique
         let uniqueServiceNumber = serviceNumber;
         let exists = await MemberModel.findOne({ serviceNumber: uniqueServiceNumber });
@@ -82,12 +98,11 @@ export async function POST(req: NextRequest) {
       dbErrorMessage = dbErr.message || "Failed to save record to MongoDB.";
     }
 
-    // If MongoDB save failed, respond with error so user is notified immediately
     if (!savedMember) {
       return NextResponse.json(
         {
           success: false,
-          error: `Database registration failed: ${dbErrorMessage || "Could not connect to database"}. Please check your MONGODB_URI in .env`,
+          error: `Database registration failed: ${dbErrorMessage || "Could not connect to database"}. Please check your MONGODB_URI in environment variables.`,
         },
         { status: 500 }
       );
